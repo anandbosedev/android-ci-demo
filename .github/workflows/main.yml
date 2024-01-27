@@ -16,9 +16,7 @@ jobs:
             - name: Upload Build
               uses: actions/upload-artifact@v4
               with:
-                name: 'Build'
-                path: app/build/outputs/apk/debug/app-debug.apk
-            - name: Upload test reports
-              uses: actions/upload-artifact@v4
-              with:
-                name: 'Reports'
+                name: 'builds-and-test-reports'
+                path: |
+                  app/build/outputs/apk/debug/app-debug.apk
+                  app/build/reports
