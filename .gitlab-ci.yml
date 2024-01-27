@@ -1,0 +1,11 @@
+image: anandbose16/android-sdk:34
+build-and-test-job:
+  script:
+    - gradle clean :app:mediumPhoneApi34AospAtdDebugAndroidTest
+  artifacts:
+    untracked: false
+    when: on_success
+    expire_in: "30 days"
+    paths:
+      - app/build/outputs/apk/debug/app-debug.apk
+      - app/build/reports
