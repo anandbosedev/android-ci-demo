@@ -47,6 +47,17 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    testOptions {
+        managedDevices {
+            localDevices {
+                create("mediumPhoneApi34AospAtd") {
+                    device = "Medium Phone"
+                    apiLevel = 34
+                    systemImageSource = "aosp-atd"
+                }
+            }
+        }
+    }
 }
 
 dependencies {

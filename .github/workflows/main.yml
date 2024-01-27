@@ -1,0 +1,24 @@
+name: Build and test
+on:
+    push:
+        branches: [ main ]
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+        container: 
+            image: anandbose16/android-sdk:34
+            options: --device=/dev/kvm
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Build & Test
+              run: gradle clean :app:mediumPhoneApi34AospAtdDebugAndroidTest
+            - name: Upload Build
+              uses: actions/upload-artifact@v4
+              with:
+                name: 'Build'
+                path: app/build/outputs/apk/debug/app-debug.apk
+            - name: Upload test reports
+              uses: actions/upload-artifact@v4
+              with:
+                name: 'Reports'
