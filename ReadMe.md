@@ -10,7 +10,7 @@ This is how the app looks like:
 
 [A short video here](test_app.webm)
 
-We have written 3 basic instrumented tests to check if:
+I have written 3 basic instrumented tests to check if:
 1. The initial state is 0, just after the fresh start
 2. The value is 1 after pressing "Increment" button, just after the fresh start
 3. The value is -1 after pressing the "Decrement" button, just after the fresh start
@@ -33,7 +33,7 @@ testOptions {
 }
 ```
 
-This gives us a Gradle task 'mediumPhoneApi34AospAtdDebugAndroidTest' which builds the project, spins up the emulator instance with `aosp-atd` image (a light-weight image specifically for instrumentation testing), executes the test cases and generate reports.
+This gives us a Gradle task `mediumPhoneApi34AospAtdDebugAndroidTest` which builds the project, spins up the emulator instance with `aosp-atd` image (a light-weight image specifically for instrumentation testing), executes the test cases and generate reports.
 
 ## Test automation with GitHub workflow
 
