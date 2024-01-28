@@ -1,0 +1,26 @@
+trigger:
+  - main
+pool:
+  vmImage: ubuntu-latest
+
+container:
+  image: anandbose16/android-sdk:34
+  options: --device /dev/kvm
+
+steps:
+  - script: gradle clean :app:mediumPhoneApi34AospAtdDebugAndroidTest
+    displayName: Build and test app
+  - script: cp ./app/build/outputs/apk/debug/app-debug.apk ./app-debug.apk
+    displayName: Copy build
+  - script: cp -r ./app/build/reports ./
+    displayName: Copy test reports
+  - task: PublishBuildArtifacts@1
+    displayName: Publish APK file
+    inputs:
+      PathtoPublish: app-debug.apk
+      ArtifactName: app-build
+  - task: PublishBuildArtifacts@1
+    displayName: Publish test reports
+    inputs:
+      PathtoPublish: app/build/reports
+      ArtifactName: reports

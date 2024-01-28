@@ -47,11 +47,10 @@ The workflow is simple:
 
 The implementation of this workflow is hosting platform specific, and you can refer the implementations here:
 
-* GitHub Workflow: [.github/workflows/main.yml](.github/workflows/main.yml)
-* GitLab CI: [.gitlab-ci.yml](.gitlab-ci.yml) *(Currently Broken because of no KVM in GitLab runners)*
+* GitHub Workflow: [Repo](https://github.com/anandbosedev/android-ci-demo) [.github/workflows/main.yml](.github/workflows/main.yml)
+* GitLab CI: [Repo](https://gitlab.com/anandbose/android-ci-demo) [.gitlab-ci.yml](.gitlab-ci.yml) *(Instrumented testing is broken because of no KVM in GitLab CI runners)*
+* Azure DevOps Pipelines: [Repo](https://dev.azure.com/anandbose/android-ci-demo) [azure-pipelines.yml](azure-pipelines.yml)
 * BitBucket Pipelines: `TODO`
-* Azure DevOps: `TODO`
-
 ## Roadmap
 
 I am working on this during my free times. Here are the list of things I plan to do:
