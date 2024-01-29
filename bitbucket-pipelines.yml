@@ -1,0 +1,13 @@
+image: anandbose16/android-sdk:34
+
+pipelines:
+  default:
+    - step:
+        name: 'Build & test'
+        caches:
+          - "gradle"
+        script:
+          - gradle clean :app:mediumPhoneApi34AospAtdDebugAndroidTest
+        artifacts:
+          - "app/build/outputs/apk/debug/app-debug.apk"
+          - "app/build/reports"
