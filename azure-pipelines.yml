@@ -5,7 +5,6 @@ pool:
 
 container:
   image: anandbose16/android-sdk:34
-  options: --device /dev/kvm
 
 steps:
   - script: gradle clean :app:mediumPhoneApi34AospAtdDebugAndroidTest
