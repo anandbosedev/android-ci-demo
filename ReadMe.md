@@ -6,14 +6,19 @@ This is a demonstration of how to setup CI for Android projects. In this reposit
 
 This is how the app looks like:
 
-![](ss.png)
+| ![Screenshot of the app](ss.png) |
+| -- |
+| *Screenshot of the app* |
 
-[A short video here](test_app.webm)
+In this project, we have unit tests `CounterStateTest` for testing the `CounterState` class, the stateholder of the application with `increment()` and `decrement()` mutating methods. Also we have instrumented tests `CounterAppTest` to validate the application UI will interact properly with `CounterState` state class.
 
-I have written 3 basic instrumented tests to check if:
-1. The initial state is 0, just after the fresh start
-2. The value is 1 after pressing "Increment" button, just after the fresh start
-3. The value is -1 after pressing the "Decrement" button, just after the fresh start
+| ![Unit test execution in Android Studio](unit-test-execution.png) |
+| -- |
+| *Unit test execution in Android Studio* |
+
+| ![Instrumented test execution in Android Studio](instrumented-test-execution.png) |
+| -- |
+| *Instrumented test execution in Android Studio* |
 
 ## Instrumented tests with Gradle managed devices
 
