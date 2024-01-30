@@ -7,19 +7,15 @@ container:
   image: anandbose16/android-sdk:34
 
 steps:
-  - script: gradle clean :app:mediumPhoneApi34AospAtdDebugAndroidTest
-    displayName: Build and test app
-  - script: cp ./app/build/outputs/apk/debug/app-debug.apk ./app-debug.apk
-    displayName: Copy build
-  - script: cp -r ./app/build/reports ./
-    displayName: Copy test reports
+  - script: gradle clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
+    displayName: Assemble, lint & execute unit tests
   - task: PublishBuildArtifacts@1
-    displayName: Publish APK file
+    displayName: APK file
     inputs:
-      PathtoPublish: app-debug.apk
+      PathtoPublish: app/build/outputs/apk/debug/app-debug.apk
       ArtifactName: app-build
   - task: PublishBuildArtifacts@1
-    displayName: Publish test reports
+    displayName: Lint and unit test reports
     inputs:
       PathtoPublish: app/build/reports
       ArtifactName: reports

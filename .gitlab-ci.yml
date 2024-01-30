@@ -1,7 +1,7 @@
 image: anandbose16/android-sdk:34
-build-and-test-job:
+build-lint-test:
   script:
-    - gradle clean :app:mediumPhoneApi34AospAtdDebugAndroidTest
+    - gradle clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
   artifacts:
     untracked: false
     when: on_success
