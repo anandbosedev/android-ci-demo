@@ -11,12 +11,15 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
-            - name: Build & Test
-              run: gradle clean :app:mediumPhoneApi34AospAtdDebugAndroidTest
+            - name: Build, lint, execute unit tests and instrumented tests
+              run: gradle clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:mediumPhoneApi34AospAtdDebugAndroidTest
             - name: Upload Build
               uses: actions/upload-artifact@v4
               with:
-                name: 'builds-and-test-reports'
-                path: |
-                  app/build/outputs/apk/debug/app-debug.apk
-                  app/build/reports
+                name: 'build'
+                path: app/build/outputs/apk/debug/app-debug.apk
+            - name: Upload lint and test reports
+              uses: actions/upload-artifact@v4
+              with:
+                name: reports
+                path: app/build/reports

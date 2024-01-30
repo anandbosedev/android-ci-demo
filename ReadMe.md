@@ -39,18 +39,27 @@ This gives us a Gradle task `mediumPhoneApi34AospAtdDebugAndroidTest` which buil
 
 For automating build generation and test execution, we use a pre-built Android SDK toolchain container image [anandbose16/android-sdk](https://hub.docker.com/r/anandbose16/android-sdk) ([GitHub](https://github.com/anandbosedev/android-sdk)) to minimise the setup time and simplifying the configuration. The container image meets the requirements for basic Android development environment such as Android SDK toolchain, Gradle, OpenJDK, emulator and basic command-line utilities for post tasks.
 
-The workflow is simple:
-1. Use the container anandbose16/android-sdk:34 inside GitHub provided Ubuntu host
+The ideal workflow:
+1. Use the container image `anandbose16/android-sdk:34`
 2. Checkout code
-3. Perform build and execute tests with `mediumPhoneApi34AospAtdDebugAndroidTest` Gradle task
-4. Upload the APK file and the test reports beautified by Gradle.
+3. Generate build with `:app:assembleDebug` task
+4. Execute lint with `:app:lintDebug` task
+5. Execute unit tests with `:app:testDebugUnitTest` task
+6. Execute instrumented tests with `:app:mediumPhoneApi34AospAtdDebugAndroidTest` task
+7. Upload the APK file and the test reports to artifacts storage.
 
-The implementation of this workflow is hosting platform specific, and you can refer the implementations here:
+> Note: The implementation of the workflow is different on each platform, and platform implied limitations will apply.
 
-* GitHub Workflow: [Repo](https://github.com/anandbosedev/android-ci-demo) [.github/workflows/main.yml](.github/workflows/main.yml)
-* GitLab CI: [Repo](https://gitlab.com/anandbose/android-ci-demo) [.gitlab-ci.yml](.gitlab-ci.yml) *(Instrumented testing is broken because of no KVM in GitLab CI runners)*
-* Azure DevOps Pipelines: [Repo (awaiting Azure DevOps Parallelism from Microsoft)](https://dev.azure.com/anandbose/android-ci-demo) [azure-pipelines.yml](azure-pipelines.yml)
-* BitBucket Pipelines: [Repo](https://bitbucket.org/anandbose/android-ci-demo) [bitbucket-pipelines.yml](bitbucket-pipelines.yml)
+| Platform | Repo | Configuration | Supports Build | Supports Lint | Supports Unit Tests | Support Instrumented Tests |
+|----------|------|---------------|----------------|---------------|---------------------|----------------------------|
+| GitHub | [Repo](https://github.com/anandbosedev/android-ci-demo) | [.github/workflows/main.yml](.github/workflows/main.yml) | ✅ | ✅ | ✅ | ✅ |
+| GitLab | [Repo](https://gitlab.com/anandbose/android-ci-demo) | [.gitlab-ci.yml](.gitlab-ci.yml) | ✅ | ✅ | ✅ | ⛔<sup>[1]</sup> |
+| BitBucket | [Repo](https://bitbucket.org/anandbose/android-ci-demo) | [bitbucket-pipelines.yml](bitbucket-pipelines.yml) | ✅ | ✅ | ✅ | ⛔<sup>[2]</sup> |
+| Azure DevOps | [Repo](https://dev.azure.com/anandbose/android-ci-demo) | [azure-pipelines.yml](azure-pipelines.yml) | ✅ | ✅ | ✅ | ⛔<sup>[3]</sup> |
+
+> <sup>[1][2]</sup> *Running emulators in GitLab and BitBucket pipelines are not supported due to lack of [KVM](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) hypervisor.*<br>
+<sup>[3]</sup> *Running emulators in Azure is not supported due to lack of [KVM](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) hypervisor support. However, Azure provides a task [AppCenterTest@1](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/app-center-test-v1?view=azure-pipelines) requires paid subscription in [VS AppCenter](https://appcenter.ms/).*
+
 ## Roadmap
 
 I am working on this during my free times. Here are the list of things I plan to do:
