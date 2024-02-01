@@ -19,7 +19,7 @@ jobs:
                   ~/.android
                 key: ${{ runner.os }}-build-${{ hashFile('**/cache-id') }}
                 restore-keys: |
-                  ${{ runner.os }}-build-${{ hashFile('cache-id') }}
+                  ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
                   ${{ runner.os }}-build-
                   ${{ runner.os }}-
             - name: Build, lint, execute unit tests and instrumented tests
