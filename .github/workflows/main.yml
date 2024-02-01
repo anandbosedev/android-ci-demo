@@ -17,11 +17,14 @@ jobs:
                 path: |
                   ~/.gradle
                   ~/.android
+                  /opt/android/system-images
                 key: ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
                 restore-keys: |
                   ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
                   ${{ runner.os }}-build-
                   ${{ runner.os }}-
+            - name: Echo environment variables
+              run: env
             - name: Build, lint, execute unit tests and instrumented tests
               run: gradle clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:mediumPhoneAndTabletApi34AospAtdGroupDebugAndroidTest
             - name: Upload Build
