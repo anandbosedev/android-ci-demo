@@ -71,7 +71,7 @@ I am working on this during my free times. Here are the list of things I plan to
 
 1. Explore the ways to automate the container image builds, at least during vendor updates (Android SDK toolchain, Gradle, OpenJDK, emulator, base image security updates, etc)
 2. Provide more container images for different Android versions
-3. Create workflow configurations for GitLab, BitBucket, Azure DevOps etc.
+3. Improve workflow configurations for GitLab, BitBucket, Azure DevOps etc.
 4. Improve performance with persisting Gradle caches.
 
 #### *Feel free to send comments, suggestions, issues and pull requests!*

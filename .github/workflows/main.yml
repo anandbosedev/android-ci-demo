@@ -11,8 +11,19 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+            - name: Cache Gradle and Android SDK generated files
+              uses: actions/cache@v3
+              with:
+                path: |
+                  ~/.gradle
+                  ~/.android
+                key: ${{ runner.os }}-build-${{ hashFile('**/cache-id') }}
+                restore-keys: |
+                  ${{ runner.os }}-build-${{ hashFile('cache-id') }}
+                  ${{ runner.os }}-build-
+                  ${{ runner.os }}-
             - name: Build, lint, execute unit tests and instrumented tests
-              run: gradle clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:mediumPhoneApi34AospAtdDebugAndroidTest
+              run: gradle clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:mediumPhoneAndTabletApi34AospAtdGroupDebugAndroidTest
             - name: Upload Build
               uses: actions/upload-artifact@v4
               with:

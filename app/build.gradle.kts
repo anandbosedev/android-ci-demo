@@ -55,6 +55,17 @@ android {
                     apiLevel = 34
                     systemImageSource = "aosp-atd"
                 }
+                create("mediumTabletApi34AospAtd") {
+                    device = "Medium Tablet"
+                    apiLevel = 34
+                    systemImageSource = "aosp-atd"
+                }
+            }
+            groups {
+                create("mediumPhoneAndTabletApi34AospAtd") {
+                    targetDevices.add(devices["mediumPhoneApi34AospAtd"])
+                    targetDevices.add(devices["mediumTabletApi34AospAtd"])
+                }
             }
         }
     }
