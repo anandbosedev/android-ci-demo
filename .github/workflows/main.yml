@@ -12,12 +12,12 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
             - name: Cache Gradle and Android SDK generated files
-              uses: actions/cache@v3
+              uses: actions/cache@v4
               with:
                 path: |
                   ~/.gradle
                   ~/.android
-                key: ${{ runner.os }}-build-${{ hashFiles('**/cache-id') }}
+                key: ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
                 restore-keys: |
                   ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
                   ${{ runner.os }}-build-
