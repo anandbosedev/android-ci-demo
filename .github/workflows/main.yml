@@ -17,7 +17,7 @@ jobs:
                 path: |
                   ~/.gradle
                   ~/.android
-                key: ${{ runner.os }}-build-${{ hashFile('**/cache-id') }}
+                key: ${{ runner.os }}-build-${{ hashFiles('**/cache-id') }}
                 restore-keys: |
                   ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
                   ${{ runner.os }}-build-
