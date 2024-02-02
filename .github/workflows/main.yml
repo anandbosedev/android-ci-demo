@@ -15,8 +15,8 @@ jobs:
               uses: actions/cache@v4
               with:
                 path: |
-                  $HOME/.gradle
-                  $HOME/.android
+                  /github/home/.gradle
+                  /github/home/.android
                   /opt/android/system-images
                 key: ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
                 restore-keys: |
