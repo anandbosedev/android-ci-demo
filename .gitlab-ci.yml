@@ -1,7 +1,23 @@
 image: anandbose16/android-sdk:34
 build-lint-test:
+  variables:
+    GRADLE_USER_HOME: $CI_PROJECT_DIR/gradle-user-home
   script:
-    - gradle clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
+    - gradle --build-cache --configuration-cache :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
+  cache:
+    policy: pull-push
+    unprotect: false
+    untracked: false
+    when: on_success
+    key: cache-$CI_COMMIT_REF_SLUG
+    fallback_keys:
+      - "cache-$CI_DEFAULT_BRANCH"
+      - "cache-default"
+    paths:
+      - .gradle/
+      - build/
+      - app/build/
+      - $CI_PROJECT_DIR/gradle-user-home
   artifacts:
     untracked: false
     when: on_success
