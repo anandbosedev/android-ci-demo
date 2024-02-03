@@ -22,7 +22,7 @@ In this project, we have unit tests `CounterStateTest` for testing the `CounterS
 
 ## Instrumented tests with Gradle managed devices
 
-Gradle makes us easier to quickly spin up an emulated device with the required specifications. In the `app/build.gradle.kts`, we provide the specification of our medium sized phone:
+Gradle makes us easier to quickly spin up emulated devices with the required specifications. In the `app/build.gradle.kts`, we provide the specification of a medium sized phone and tablet. Also we create a device group with both devices included:
 
 ```kotlin
 testOptions {
@@ -33,12 +33,23 @@ testOptions {
                 apiLevel = 34
                 systemImageSource = "aosp-atd"
             }
+            create("mediumTabletApi34AospAtd") {
+                device = "Medium Tablet"
+                apiLevel = 34
+                systemImageSource = "aosp-atd"
+            }
+        }
+        groups {
+            create("mediumPhoneAndTabletApi34AospAtd") {
+                targetDevices.add(devices["mediumPhoneApi34AospAtd"])
+                targetDevices.add(devices["mediumTabletApi34AospAtd"])
+            }
         }
     }
 }
 ```
 
-This gives us a Gradle task `mediumPhoneApi34AospAtdDebugAndroidTest` which builds the project, spins up the emulator instance with `aosp-atd` image (a light-weight image specifically for instrumentation testing), executes the test cases and generate reports.
+This gives us a Gradle task `:app:mediumPhoneAndTabletApi34AospAtdGroupDebugAndroidTest` which builds the project, spins up the emulator instances with `aosp-atd` image (a light-weight image specifically for instrumentation testing) for both medium sized phone and tablet, executes the test cases and generate reports.
 
 ## Test automation workflow
 
@@ -50,7 +61,7 @@ The ideal workflow:
 3. Generate build with `:app:assembleDebug` task
 4. Execute lint with `:app:lintDebug` task
 5. Execute unit tests with `:app:testDebugUnitTest` task
-6. Execute instrumented tests with `:app:mediumPhoneApi34AospAtdDebugAndroidTest` task
+6. Execute instrumented tests with `:app:mediumPhoneAndTabletApi34AospAtdGroupDebugAndroidTest` task
 7. Upload the APK file and the test reports to artifacts storage.
 
 > Note: The implementation of the workflow is different on each platform, and platform implied limitations will apply.
@@ -69,9 +80,9 @@ The ideal workflow:
 
 I am working on this during my free times. Here are the list of things I plan to do:
 
-1. Explore the ways to automate the container image builds, at least during vendor updates (Android SDK toolchain, Gradle, OpenJDK, emulator, base image security updates, etc)
+1. Explore the ways to automate the container image builds `anandbose16/android-sdk`, at least during vendor updates (Android SDK toolchain, Gradle, OpenJDK, emulator, base image security updates, etc)
 2. Provide more container images for different Android versions
 3. Improve workflow configurations for GitLab, BitBucket, Azure DevOps etc.
-4. Improve performance with persisting Gradle caches.
+4. Improve workflow performance by caching dependencies, emulator images, configurations. Also persisting the caches across the build will significantly reduces execution times.
 
 #### *Feel free to send comments, suggestions, issues and pull requests!*
