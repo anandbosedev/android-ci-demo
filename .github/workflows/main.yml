@@ -1,40 +1,43 @@
 name: Build and test
 on:
-    push:
-        branches: [ main ]
+  push:
+    branches: [ main ]
 jobs:
-    build-and-test:
-        runs-on: ubuntu-latest
-        container: 
-            image: anandbose16/android-sdk:34
-            options: --device=/dev/kvm
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-            - name: Cache Gradle and Android SDK generated files
-              uses: actions/cache@v4
-              with:
-                path: |
-                  ~/.gradle/
-                  ~/.android/
-                  .gradle/
-                  /opt/android/system-images/
-                  app/build/
-                  build/
-                key: ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
-                restore-keys: |
-                  ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
-                  ${{ runner.os }}-build-
-                  ${{ runner.os }}-
-            - name: Build, lint, execute unit tests and instrumented tests
-              run: gradle --build-cache --configuration-cache :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:mediumPhoneAndTabletApi34AospAtdGroupDebugAndroidTest
-            - name: Upload Build
-              uses: actions/upload-artifact@v4
-              with:
-                name: 'build'
-                path: app/build/outputs/apk/debug/app-debug.apk
-            - name: Upload lint and test reports
-              uses: actions/upload-artifact@v4
-              with:
-                name: reports
-                path: app/build/reports
+  build-and-test:
+    runs-on: ubuntu-latest
+    container: 
+      image: anandbose16/android-sdk:34
+      options: --device=/dev/kvm
+      env:
+        GRADLE_USER_HOME: /var/gradle
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cache Gradle and Android SDK generated files
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/
+            ~/.android/
+            .gradle/
+            /opt/android/system-images/
+            app/build/
+            build/
+            /var/gradle
+          key: ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ hashFiles('cache-id') }}
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Build, lint, execute unit tests and instrumented tests
+        run: gradle --build-cache --configuration-cache :app:assembleDebug :app:lintDebug :app:testDebugUnitTest :app:mediumPhoneAndTabletApi34AospAtdGroupDebugAndroidTest
+      - name: Upload Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'build'
+          path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload lint and test reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: app/build/reports
