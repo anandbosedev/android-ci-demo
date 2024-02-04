@@ -6,11 +6,12 @@ definitions:
         files:
           - cache-id
       path: |
-        "~/.gradle"
-        "~/.android"
-        ".gradle/"
-        "build/"
-        "app/build/"
+        "$HOME/.gradle"
+        "$HOME/.android"
+        "./.gradle"
+        "./build"
+        "./app/build"
+        "/var/gradle"
 pipelines:
   default:
     - step:
@@ -18,7 +19,7 @@ pipelines:
         caches:
           - "gradle-android-build"
         script:
-          - gradle --build-cache --configuration-cache :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
+          - GRADLE_USER_HOME="/var/gradle" gradle --build-cache --configuration-cache :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
         artifacts:
           - "app/build/outputs/apk/debug/app-debug.apk"
           - "app/build/reports"
