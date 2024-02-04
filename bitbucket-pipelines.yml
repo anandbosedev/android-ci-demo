@@ -1,13 +1,24 @@
 image: anandbose16/android-sdk:34
-
+definitions:
+  caches:
+    gradle-android-build:
+      key:
+        files:
+          - cache-id
+      path: |
+        "~/.gradle"
+        "~/.android"
+        ".gradle/"
+        "build/"
+        "app/build/"
 pipelines:
   default:
     - step:
         name: Assemble, lint and run unit tests
         caches:
-          - "gradle"
+          - "gradle-android-build"
         script:
-          - gradle clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
+          - gradle --build-cache --configuration-cache :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
         artifacts:
           - "app/build/outputs/apk/debug/app-debug.apk"
           - "app/build/reports"
