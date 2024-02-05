@@ -6,8 +6,39 @@ pool:
 container:
   image: anandbose16/android-sdk:34
 
+variables:
+  GRADLE_USER_HOME: $(Pipeline.Workspace)/.gradle_user_home
+
 steps:
-  - script: gradle clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
+  - task: Cache@2
+    inputs:
+      key: '"gradle-user-home" | "$(Agent.OS)" | cache-id'
+      restoreKeys: |
+        "gradle-user-home" | "$(Agent.OS)"
+        "gradle-user-home"
+      path: $(GRADLE_USER_HOME)
+  - task: Cache@2
+    inputs:
+      key: '"android-app-build" | "$(Agent.OS)" | cache-id'
+      restoreKeys: |
+        "android-app-build" | "$(Agent.OS)"
+        "android-app-build"
+      path: app/build
+  - task: Cache@2
+    inputs:
+      key: '"android-project-build" | "$(Agent.OS)" | cache-id'
+      restoreKeys: |
+        "android-project-build" | "$(Agent.OS)"
+        "android-project-build"
+      path: build/
+  - task: Cache@2
+    inputs:
+      key: '"gradle-project-dir" | "$(Agent.OS)" | cache-id'
+      restoreKeys: |
+        "gradle-project-dir" | "$(Agent.OS)"
+        "gradle-project-dir"
+      path: .gradle/
+  - script: gradle --build-cache --configuration-cache :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
     displayName: Assemble, lint & execute unit tests
   - task: PublishBuildArtifacts@1
     displayName: APK file
