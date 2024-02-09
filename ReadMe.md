@@ -1,6 +1,6 @@
 # Demonstration of CI setup for Android projects
 
-[![Build and test](https://github.com/anandbosedev/android-ci-demo/actions/workflows/main.yml/badge.svg)](https://github.com/anandbosedev/android-ci-demo/actions/workflows/main.yml) [![pipelines](https://gitlab.com/anandbose/android-ci-demo/badges/main/pipeline.svg)](https://gitlab.com/anandbose/android-ci-demo)
+[![Build and test](https://github.com/anandbosedev/android-ci-demo/actions/workflows/main.yml/badge.svg)](https://github.com/anandbosedev/android-ci-demo/actions/workflows/main.yml) [![pipelines](https://gitlab.com/anandbose/android-ci-demo/badges/main/pipeline.svg)](https://gitlab.com/anandbose/android-ci-demo) [![Build Status](https://dev.azure.com/anandbose/android-ci-demo/_apis/build/status%2Fandroid-ci-demo?branchName=main)](https://dev.azure.com/anandbose/android-ci-demo/_build/latest?definitionId=1&branchName=main)
 
 This is a demonstration of how to setup CI for Android projects. In this repository, we have a simple counter application built with Jetpack Compose. We aim to automate the build & instrumented testing on every push/merge to main branch.
 
