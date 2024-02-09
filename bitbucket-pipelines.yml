@@ -1,32 +1,13 @@
 image: anandbose16/android-sdk:34
-definitions:
-  caches:
-    android-project-build:
-      key:
-        files:
-          - cache-id
-      path: ./build
-    android-app-build:
-      key:
-        files:
-          - cache-id
-      path: ./app/build
-    gradle-local:
-      key:
-        files:
-          - cache-id
-      path: ./.gradle
+
 pipelines:
   default:
     - step:
         name: Assemble, lint and run unit tests
         caches:
           - gradle
-          - android-project-build
-          - android-app-build
-          - gradle-local
         script:
-          - gradle --build-cache --configuration-cache :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
+          - gradle --build-cache --configuration-cache --parallel clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
         artifacts:
           - "app/build/outputs/apk/debug/app-debug.apk"
           - "app/build/reports"

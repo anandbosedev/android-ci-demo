@@ -3,7 +3,7 @@ build-lint-test:
   variables:
     GRADLE_USER_HOME: $CI_PROJECT_DIR/gradle-user-home
   script:
-    - gradle --build-cache --configuration-cache :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
+    - gradle --build-cache --configuration-cache --parallel clean :app:assembleDebug :app:lintDebug :app:testDebugUnitTest
   cache:
     policy: pull-push
     unprotect: false
@@ -14,9 +14,6 @@ build-lint-test:
       - "cache-$CI_DEFAULT_BRANCH"
       - "cache-default"
     paths:
-      - .gradle/
-      - build/
-      - app/build/
       - $CI_PROJECT_DIR/gradle-user-home
   artifacts:
     untracked: false
