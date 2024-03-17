@@ -78,13 +78,4 @@ The ideal workflow:
 > <sup>[1][2]</sup> *Running emulators in GitLab and BitBucket pipelines are not supported due to lack of [KVM](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) hypervisor.*<br>
 <sup>[3]</sup> *Running emulators in Azure is not supported due to lack of [KVM](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) hypervisor support. However, Azure provides a task [AppCenterTest@1](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/app-center-test-v1?view=azure-pipelines) requires paid subscription in [VS AppCenter](https://appcenter.ms/).*
 
-## Roadmap
-
-I am working on this during my free times. Here are the list of things I plan to do:
-
-1. Explore the ways to automate the container image builds `anandbose16/android-sdk`, at least during vendor updates (Android SDK toolchain, Gradle, OpenJDK, emulator, base image security updates, etc)
-2. Provide more container images for different Android versions
-3. Improve workflow configurations for GitLab, BitBucket, Azure DevOps etc.
-4. Improve workflow performance by caching dependencies, emulator images, configurations. Also persisting the caches across the build will significantly reduces execution times.
-
 #### *Feel free to send comments, suggestions, issues and pull requests!*
