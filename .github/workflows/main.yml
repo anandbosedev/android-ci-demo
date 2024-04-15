@@ -2,6 +2,8 @@ name: Build and test
 on:
   push:
     branches: [ main ]
+  schedule:
+    - cron: '0 1 * * 0'
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
