@@ -1,12 +1,33 @@
-# Demonstration of CI setup for Android projects
+# CI/CD for Android projects - A vendor agnostic way
 
 [![Build and test](https://github.com/anandbosedev/android-ci-demo/actions/workflows/main.yml/badge.svg)](https://github.com/anandbosedev/android-ci-demo/actions/workflows/main.yml) [![pipelines](https://gitlab.com/anandbose/android-ci-demo/badges/main/pipeline.svg)](https://gitlab.com/anandbose/android-ci-demo) [![Build Status](https://dev.azure.com/anandbose/android-ci-demo/_apis/build/status%2Fandroid-ci-demo?branchName=main)](https://dev.azure.com/anandbose/android-ci-demo/_build/latest?definitionId=1&branchName=main)
 
-This is a demonstration of how to setup CI for Android projects. In this repository, we have a simple counter application built with Jetpack Compose. We aim to automate the build & instrumented testing on every push/merge to main branch.
+This project aims to be a "vendor agnostic" template of CI/CD implementation for Android projects.
+The term "vendor agnostic" refers to the practice of implementing something with commonly available, open source
+and well documented tools that does not restrict the implementation to a particular vendor.
 
-## The TestApp
+Advantages of being vendor-agnostic:
 
-This is how the app looks like:
+* Freedom to use the tools of your choice.
+* No vendor lock-in.
+* Easier migration to other vendors.
+* Ability to test your CI/CD in your local machine.
+* Reproducibility: If your script works in your local machine, it works in the cloud too.
+
+Most of the DevOps solutions offers these generic barebone functionalities:
+* Ability to pull docker images and create a working environment inside the container.
+* Ability to transfer repository to the container, execute the building scripts, testing scripts and collect build artifacts.
+* Ability to cache build intermediates to speed up subsequent builds.
+
+In this project, we use a container image with pre-configured Android SDK toolchain [anandbose16/android-sdk](https://hub.docker.com/r/anandbose16/android-sdk) ([GitHub](https://github.com/anandbosedev/android-sdk)). The build-scripts
+we write in the configuration files (the YAML files) can be reproducible in your local machine, so does in the cloud.
+The project currently provides build & test configurations for GitHub, GitLab, BitBucket and Azure DevOps Pipelines, which
+is capable for building the project and execution of unit tests. Execution of instrumented tests is currently limited to
+GitHub only because other vendors does not provide access to hypervisor from the container.
+
+## Demo
+
+For the demostration purposes I made a simple "counter" app with JetPack Compose which looks like this:
 
 | ![Screenshot of the app](ss.png) |
 | -- |
@@ -76,6 +97,7 @@ The ideal workflow:
 | Azure DevOps | [Repo](https://dev.azure.com/anandbose/android-ci-demo) | [azure-pipelines.yml](azure-pipelines.yml) | ✅ | ✅ | ✅ | ⛔<sup>[3]</sup> |
 
 > <sup>[1][2]</sup> *Running emulators in GitLab and BitBucket pipelines are not supported due to lack of [KVM](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) hypervisor.*<br>
-<sup>[3]</sup> *Running emulators in Azure is not supported due to lack of [KVM](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) hypervisor support. However, Azure provides a task [AppCenterTest@1](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/app-center-test-v1?view=azure-pipelines) requires paid subscription in [VS AppCenter](https://appcenter.ms/).*
+<sup>[3]</sup> *Running emulators in Azure is not supported due to lack of [KVM](https://developer.android.com/studio/run/emulator-acceleration#vm-linux) hypervisor support. However, you can refer to the [official solution](https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/android?view=azure-devops) which uses macOS host which can run Android
+emulator and perform instrumented tests (Kindly note this configuration is not vendor agnostic).*
 
 #### *Feel free to send comments, suggestions, issues and pull requests!*
